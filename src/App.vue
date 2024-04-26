@@ -1,30 +1,38 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
-import TableData from './components/TableData.vue';
-import { csvToJson } from './utils/fileTypeConversions';
-import { ref, onMounted } from 'vue';
+import HelloWorld from "./components/HelloWorld.vue";
+import TableData from "./components/TableData.vue";
+import { csvToJson } from "./utils/fileTypeConversions";
+import { ref, onMounted } from "vue";
 
 const jsonData = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
 onMounted(async () => {
-  const request = await fetch('/data/assignment_csv_data.csv');
-  jsonData.value = await request.text()
-    .then(txt => {
+  const request = await fetch("/data/assignment_csv_data.csv");
+  jsonData.value = await request
+    .text()
+    .then((txt) => {
       // throw new Error('418, I am a teapot.');
-      return csvToJson(txt)
-
+      return csvToJson(txt);
     })
-    .catch(err => { error.value = err; });
+    .catch((err) => {
+      error.value = err;
+    });
   loading.value = false;
 });
-
 </script>
 
-<template >
-  <HelloWorld title="Waste Collection Data" msg="Joseph Higgins"
-    :instructions="['Use the search bar to look for specific values.', 'Click the table headers to sort the columns in ascending or descending order.']" />
+<template>
+  <HelloWorld
+    title="Waste Collection Data"
+    msg="Joseph Higgins"
+    :instructions="[
+      'Use the search bar to look for specific values.',
+      'Click the table headers to sort the columns in ascending or descending order.',
+      'Click the `colour values` checkbox to colour the background of every unique value.',
+    ]"
+  />
   <div v-if="jsonData && !error">
     <TableData :data="jsonData" />
   </div>
@@ -36,4 +44,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style ></style>
+<style></style>
