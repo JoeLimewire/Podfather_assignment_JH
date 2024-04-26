@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import Heading from "./components/Heading.vue";
 import TableData from "./components/TableData.vue";
 import { csvToJson } from "./utils/fileTypeConversions";
 import { ref, onMounted } from "vue";
@@ -24,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <HelloWorld
+  <Heading
     title="Waste Collection Data"
     msg="Joseph Higgins"
     :instructions="[
