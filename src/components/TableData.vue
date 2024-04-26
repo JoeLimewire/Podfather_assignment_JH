@@ -1,6 +1,6 @@
 <script>
 import { ref, computed } from "vue";
-import { stringToHex } from "@/utils/utils.ts";
+import { stringToHex, textColourFromHex } from "@/utils/utils.ts";
 
 export default {
   props: {
@@ -13,6 +13,7 @@ export default {
     const searchVal = ref("");
     const sortColumn = ref(null);
     const sortDirection = ref(null);
+    const isColourChecked = ref(false);
 
     // Changes the search value
     const onSearch = (event) => {
@@ -57,7 +58,7 @@ export default {
       });
     });
 
-    return { searchVal, onSearch, filteredData, onSort, sortColumn, sortDirection };
+    return { searchVal, onSearch, filteredData, onSort, sortColumn, sortDirection, stringToHex, isColourChecked, textColourFromHex };
   },
 };
 </script>
@@ -66,7 +67,8 @@ export default {
   <div class="controls">
     <span class="mr-2">Search:</span>
     <input type="text" v-on:input="(e) => onSearch(e)" class="mr-2 border p-2 rounded bg-white" />
-    <input type="checkbox" title="Colour table values" class="mr-2" />
+    <input type="checkbox" id="colour-values" title="Colour table values" class="mr-2" v-model="isColourChecked" />
+    <label for="colour-values"> Colour values</label>
   </div>
 
   <hr class="my-3" />
@@ -92,7 +94,14 @@ export default {
         </th>
       </tr>
       <tr v-for="(row, i) in filteredData" class="hover:bg-slate-100">
-        <td v-for="(cell, j) in row" :class="`p-1 mr-4 ${j > 1 ? '' : ''}`">
+        <td
+          v-for="(cell, j) in row"
+          :class="`p-1 mr-4 `"
+          :style="{
+            background: isColourChecked ? stringToHex(cell) : 'white',
+            color: isColourChecked ? textColourFromHex(stringToHex(cell)) : 'black',
+          }"
+        >
           {{ cell }}
         </td>
       </tr>
