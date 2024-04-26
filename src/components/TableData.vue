@@ -65,10 +65,11 @@ export default {
 
 <template>
   <div class="controls">
-    <span class="mr-2">Search:</span>
-    <input type="text" v-on:input="(e) => onSearch(e)" class="mr-2 border p-2 rounded bg-white" />
-    <input type="checkbox" id="colour-values" title="Colour table values" class="mr-2" v-model="isColourChecked" />
-    <label for="colour-values"> Colour values</label>
+    <input type="text" v-on:input="(e) => onSearch(e)" class="mr-2 mb-2 bg-white shadow rounded border-0 p-3" placeholder="Search" />
+    <div class="inline-block p-3 rounded shadow select-none bg-white">
+      <input type="checkbox" id="colour-values" title="Colour table values" v-model="isColourChecked" />
+      <label for="colour-values"> Colour values</label>
+    </div>
   </div>
 
   <hr class="my-3" />
